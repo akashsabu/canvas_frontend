@@ -1,95 +1,122 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import styles from "./styles.module.css"; 
+import React, { useState, useEffect, useLayoutEffect } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 
-export default function Home() {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
+import { setProjectProps } from "../redux/features/projectSlice";
+import AuthWrapper from '@/assets/components/AuthWrapper'; 
+
+
+const Home = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [projectName, setProjectName] = useState("");
+  const [canvasWidth, setCanvasWidth] = useState();
+  const [canvasHeight, setCanvasHeight] = useState();
+  const [layers, setLayers] = useState([]);
+
+  const [data, setData] = useState([]);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    const tokenFromStorage = localStorage.getItem("accessToken");
+    setToken(tokenFromStorage);
+  }, []);
+
+  useEffect(() => {
+    if (token) {
+    axios
+      .get("http://127.0.0.1:8000/api/v1/canvasdata/user_canvas_data/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setData(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    }
+
+  }, [token]);
+
+
+  const handleNewProjectClick = () => {
+    console.log("New project clicked!");
+    router.push("/newproject"); 
+  };
+
+  const handleProjectClick = async (item) => {
+    console.log(item.id);
+    console.log("Project clicked!");
+  
+    setProjectName(item.title);
+  
+    const filePath = `http://127.0.0.1:8000/${item.file}`;
+  
+    try {
+      const response = await axios.get(filePath);
+      const data = response.data;
+      console.log(data);
+  
+      // Set canvas dimensions and layers
+      setCanvasHeight(data.height);
+      setCanvasWidth(data.width);
+      setLayers(data.layers || []);
+  
+      // Ensure that these states are set after fetching the data
+      dispatch(
+        setProjectProps({
+          name: item.title,
+          height: data.height,
+          width: data.width,
+          layers: data.layers || [],
+          isExistingProject: true,
+        })
+      );
+  
+      // Once the state is set, redirect to the canvas page
+      router.push("/canvas");
+  
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    }
+  };
+  
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <AuthWrapper>
+      <div className={styles.container}>
+        <h1>Canvas Data</h1>
+        <div className={styles.grid}>
+          <div className={styles.tile} onClick={handleNewProjectClick}>
+            <FontAwesomeIcon icon={faPlus} className={styles.icon} />
+            <h2 className={styles.title}>New Project</h2>
+          </div>
+
+          {data.map((item) => (
+            <div key={item.id} className={styles.tile}    onClick={() => handleProjectClick(item)}>
+              <img
+                src={`http://127.0.0.1:8000${item.image}`}
+                alt={item.title}
+                className={styles.image}
+              />
+              <h2 className={styles.title}>{item.title}</h2>
+            </div>
+          ))}
         </div>
       </div>
+    </AuthWrapper>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
   );
-}
+};
+
+export default Home;

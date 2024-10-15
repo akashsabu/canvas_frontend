@@ -1,0 +1,52 @@
+
+
+
+.controls {
+  padding: 10px; /* Padding around the controls */
+  background-color: #fff; /* Light background for the controls */
+  border-radius: 5px; /* Rounded corners */
+  border: 1px solid #ccc; /* Light border around the layer list */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.control-section {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.control-button {
+  display:block;
+  width:150px;
+  padding: 10px 15px; /* Padding inside buttons */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded corners for buttons */
+  cursor: pointer; /* Pointer cursor on hover */
+  background-color: rgb(175, 119, 205); /* Bootstrap primary color */
+  color: white; /* Text color */
+  transition: background-color 0.3s, transform 0.1s; /* Transition effects */
+}
+
+.control-button:hover {
+  background-color: rgb(148, 89, 183); /* Darker shade on hover */
+}
+
+.control-button:active {
+  transform: scale(0.95); /* Slight scale effect when clicked */
+}
+
+.label {
+  font-size: 14px; /* Font size for labels */
+  margin-bottom: 5px; /* Space between label and input */
+}
+
+.color-picker {
+  border: 1px solid #ccc; /* Border for color picker */
+  border-radius: 4px; /* Rounded corners */
+  width: 150px; /* Full width */
+}
+
+.range-slider {
+  width: 150px; /* Full width for range sliders */
+}

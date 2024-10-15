@@ -1,0 +1,81 @@
+.setupContainer {
+    align-items: center;
+    margin: auto;
+    margin-top: 80px;
+  }
+  
+  .logoDiv {
+    width: 100px;
+  }
+  
+  .titleDiv {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 25px;
+    background-color: #351430;
+    color: #fff;
+  }
+  
+  .rightContainer {
+    width: 400px;
+    margin: auto;
+    background: rgba(118, 115, 115, 0.13);
+    padding: 32px;
+    border-radius: 7px;
+  }
+  
+  .rightContainer h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  form .formGroup {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    color: #666;
+    border: 1px solid #ccc;
+    padding: 5px 15px 5px 5px;
+    border-radius: 7px;
+    background: #fff;
+  }
+  
+  form .formGroup:focus-within {
+    outline: 2px solid #634c9f;
+  }
+  
+  form .formGroup input[type="text"],
+  form .formGroup input[type="number"] {
+    width: 80%;
+    padding-block: 8px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+  }
+  form .formGroup input[type="text"]{
+    width: 100%;
+    padding: 8px;
+  }
+  form .formGroup label{
+    padding-left:8px;
+    width:35%;
+  }
+  
+  .button {
+    display: block;
+    width: 50%;
+    margin-inline: auto;
+    padding: 10px;
+    background-color: #351430;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #551430;
+  }  

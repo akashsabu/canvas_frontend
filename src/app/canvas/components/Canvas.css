@@ -1,0 +1,16 @@
+.canvas-wrapper {
+    display: flex;
+    justify-content: center; /* Center the canvas horizontally */
+    align-items: center; /* Center the canvas vertically */
+    padding: 10px; /* Optional padding for aesthetic spacing */
+  }
+  
+  .canvas-container {
+    position: relative;
+    width: 100%; /* Use 100% width for responsiveness */
+    max-width: 1200px; /* Set a maximum width for the container */
+    height: auto; /* Set height to auto to maintain aspect ratio */
+    border: 1px solid black; /* Border around the canvas */
+    cursor: crosshair; /* Change cursor style on hover */
+  }
+  

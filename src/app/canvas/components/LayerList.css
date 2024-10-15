@@ -1,0 +1,11 @@
+.layer-list {
+    margin-left: 20px;
+    width: 200px;
+    max-height: 400px; /* Ensure it takes full height of the container */
+    overflow-y: auto; /* Enables vertical scrolling */
+    border: 1px solid #ccc; /* Light border around the layer list */
+    padding: 10px; /* Optional padding for better spacing */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-radius: 6px;
+  }
+  

@@ -1,0 +1,24 @@
+.thumbnail {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between canvas and label */
+    margin-bottom: 10px; /* Space below the thumbnail */
+    cursor: pointer; /* Pointer cursor on hover */
+    border: 1px solid black; /* Default border */
+    transition: border-color 0.3s; /* Smooth transition for border color */
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  
+  .thumbnail.selected {
+    border: 2px solid blue; /* Highlight border for selected thumbnail */
+  }
+  
+  .thumbnail-canvas {
+    border-right: 1px solid black; /* Right border on canvas */
+  }
+  
+  .thumbnail-label {
+    user-select: none; /* Prevent text selection */
+  }
+  
